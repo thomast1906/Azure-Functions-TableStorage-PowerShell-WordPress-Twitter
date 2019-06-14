@@ -22,12 +22,12 @@
         New-AzureRmADServicePrincipal -ApplicationId $AzureAdApp.ApplicationId | New-AzureRmRoleAssignment -RoleDefinitionName Contributor -ServicePrincipalName $AzureAdApp.ApplicationId.Guid
 
     
-    # Create Function App and change to version 1
+    # Create Function App with runtime PowerShell
     $FunctionName = "tamopsfunctwitter"
     $ResourceGroupName = "tamopsFunctionsTwitter"
     $StorageAccountName = "tamopsfunctionstwittersa"
     $region = "eastus"
 
-        az functionapp create -n $FunctionName -g $ResourceGroupName --consumption-plan-location $region --storage-account "$StorageAccountName"
+        az functionapp create -n $FunctionName -g $ResourceGroupName --consumption-plan-location $region --storage-account "$StorageAccountName" --runtime powershell
 
-        az functionapp config appsettings set -n $FunctionName -g $ResourceGroupName  --settings FUNCTIONS_EXTENSION_VERSION=~1
+   

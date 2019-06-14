@@ -33,8 +33,7 @@ Before deploying the Azure Functions, some pre-requisites are required, these ar
 
         New-AzureRmADServicePrincipal -ApplicationId $AzureAdApp.ApplicationId | New-AzureRmRoleAssignment -RoleDefinitionName Contributor -ServicePrincipalName $AzureAdApp.ApplicationId.Guid
 ```
-3. Create the Function App and Service plan (Consumption) along with changing the App service to version 1.0 to allow the use of PowerShell to be deployed by a Function
-
+3. Create the Function App and Service plan (Consumption) with runtime PowerShell
 If you require further Output data from the used api, you can run 
 ```powershell
 # Create Function App and change to version 1
@@ -43,9 +42,8 @@ If you require further Output data from the used api, you can run
     $StorageAccountName = "tamopsfunctionstwittersa"
     $region = "eastus"
 
-        az functionapp create -n $FunctionName -g $ResourceGroupName --consumption-plan-location $region --storage-account "$StorageAccountName"
+        az functionapp create -n $FunctionName -g $ResourceGroupName --consumption-plan-location $region --storage-account "$StorageAccountName" --runtime powershell
 
-        az functionapp config appsettings set -n $FunctionName -g $ResourceGroupName  --settings FUNCTIONS_EXTENSION_VERSION=~1
 ```
 ## Deploying Application Settings
 >Application Settings are encrypted at rest and transmitted over an encrypted channel.
